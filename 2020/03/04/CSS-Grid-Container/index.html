@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"eugenachtzehn.github.io","root":"/blog/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="CSS grid system part IIContainer 容器 &#x2F; 父元素 grid-template-columns 屬性可以定義網格排版要有幾列 (columns)，以及各列的寬度  123456789101112.grid-container &amp;#123;    display: grid;    grid-template-columns: auto auto auto auto;">
+  <meta name="description" content="CSS grid system part IIContainer 容器 &#x2F; 父元素 grid-template-columns 屬性可以定義網格排版要有幾列 (columns)，以及各列的寬度  1234567891011121314151617181920212223.grid-container &amp;#123;    display: grid;    grid-template-columns">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CSS Grid Container">
 <meta property="og:url" content="https://eugenachtzehn.github.io/blog/2020/03/04/CSS-Grid-Container/index.html">
 <meta property="og:site_name" content="Eugene&#39;s Notes on F2E">
-<meta property="og:description" content="CSS grid system part IIContainer 容器 &#x2F; 父元素 grid-template-columns 屬性可以定義網格排版要有幾列 (columns)，以及各列的寬度  123456789101112.grid-container &amp;#123;    display: grid;    grid-template-columns: auto auto auto auto;">
+<meta property="og:description" content="CSS grid system part IIContainer 容器 &#x2F; 父元素 grid-template-columns 屬性可以定義網格排版要有幾列 (columns)，以及各列的寬度  1234567891011121314151617181920212223.grid-container &amp;#123;    display: grid;    grid-template-columns">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-03-04T12:16:36.000Z">
-<meta property="article:modified_time" content="2020-03-04T13:15:00.852Z">
+<meta property="article:modified_time" content="2020-03-04T19:17:42.158Z">
 <meta property="article:author" content="Eugene Tseng">
 <meta property="article:tag" content="css">
 <meta property="article:tag" content="grid">
@@ -213,10 +213,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-03-04 20:16:36 / Modified: 21:15:00" itemprop="dateCreated datePublished" datetime="2020-03-04T20:16:36+08:00">2020-03-04</time>
+              <time title="Created: 2020-03-04 20:16:36" itemprop="dateCreated datePublished" datetime="2020-03-04T20:16:36+08:00">2020-03-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-05 03:17:42" itemprop="dateModified" datetime="2020-03-05T03:17:42+08:00">2020-03-05</time>
+              </span>
 
           
 
@@ -232,7 +238,7 @@
         <h3 id="CSS-grid-system-part-II"><a href="#CSS-grid-system-part-II" class="headerlink" title="CSS grid system part II"></a>CSS grid system part II</h3><h4 id="Container-容器-父元素"><a href="#Container-容器-父元素" class="headerlink" title="Container 容器 / 父元素"></a>Container 容器 / 父元素</h4><ul>
 <li><em>grid-template-columns</em> 屬性可以定義網格排版要有幾列 (columns)，以及各列的寬度</li>
 </ul>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.grid-container</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: grid;</span><br><span class="line">    <span class="attribute">grid-template-columns</span>: auto auto auto auto;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 一共四列，每列寬度相同 (父元素的寬度除以四) */</span></span><br><span class="line"><span class="comment">/* 如果超過四項子元素，多的會自動放到下一行 */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.grid-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: grid;</span><br><span class="line">  <span class="attribute">grid-template-columns</span>: <span class="number">80px</span> <span class="number">200px</span> auto <span class="number">40px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 1, 2, 4項固定寬度，第三項為可變寬度，吃掉父元素剩下的寬度*/</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.grid-container</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: grid;</span><br><span class="line">    <span class="attribute">grid-template-columns</span>: auto auto auto auto;</span><br><span class="line">    <span class="comment">/* 一共四列，每列寬度相同 (父元素的寬度除以四) */</span></span><br><span class="line">    <span class="comment">/* 如果超過四項子元素，多的會自動放到下一行 */</span></span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="selector-class">.grid-container</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: grid;</span><br><span class="line">    <span class="attribute">grid-template-columns</span>: <span class="number">80px</span> <span class="number">200px</span> auto <span class="number">40px</span>;</span><br><span class="line">    <span class="comment">/* 1, 2, 4項固定寬度，第三項為可變寬度，吃掉父元素剩下的寬度*/</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.wrap</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: grid;</span><br><span class="line">    <span class="attribute">grid-template-columns</span>: <span class="built_in">repeat</span>(<span class="number">2</span>, <span class="number">1</span>fr <span class="number">2</span>fr) <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">gap</span>: <span class="number">5px</span>;</span><br><span class="line">    <span class="comment">/* grid-template-columns: repeat(&#123;次數&#125;, &#123;格線&#125; | &#123;格線&#125;) | &#123;格線&#125; | ... </span></span><br><span class="line"><span class="comment">    fr 是 fraction，可以視為一個格單位，repeat 則是代表重複幾次()內的設定</span></span><br><span class="line"><span class="comment">    上面的寫法是父元素寬扣除掉 50px 後，剩餘的空間先除 2，然後每個單位內部再分隔成 1/3, 2/3</span></span><br><span class="line"><span class="comment">    &#123;1/6&#125; &#123;2/6&#125; &#123;1/6&#125; &#123;2/6&#125; 50px</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><em>grid-template-rows</em> 屬性可以定義每行的高度，輸入的數值使用空格分開</li>
@@ -254,6 +260,30 @@
 </li>
 </ul>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.grid-container</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: grid;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">400px</span>;</span><br><span class="line">    <span class="attribute">align-content</span>: center;</span><br><span class="line">    <span class="comment">/* 或是</span></span><br><span class="line"><span class="comment">    align-content: space-evenly;</span></span><br><span class="line"><span class="comment">    align-content: space-around;</span></span><br><span class="line"><span class="comment">    align-content: space-between;</span></span><br><span class="line"><span class="comment">    align-content: start;</span></span><br><span class="line"><span class="comment">    align-content: end;</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>什麼是 minmax 語法？</p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/minmax" target="_blank" rel="noopener">Ref. by MDN</a></li>
+<li>為使用在 CSS grid system 中的函數，其提供了一個上下界，讓該列、行的大小只會在範圍內變動</li>
+<li>可使用的屬性有：<ul>
+<li>grid-template-columns</li>
+<li>grid-template-rows</li>
+<li>grid-auto-columns</li>
+<li>grid-auto-rows</li>
+</ul>
+</li>
+<li>標準語法如下：</li>
+<li>minmax ( [ <length> | <percentage> | <flex> | min-content | max-content | auto ] , [ <length> | <percentage> | <flex> | min-content | max-content | auto ] )</li>
+</ul>
+</li>
+</ul>
+<p>CSS:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: grid;</span><br><span class="line">  <span class="attribute">grid-template-columns</span>: <span class="built_in">minmax</span>(min-content, <span class="number">300px</span>) <span class="built_in">minmax</span>(<span class="number">200px</span>, <span class="number">1</span>fr) <span class="number">150px</span>;</span><br><span class="line">  <span class="attribute">grid-gap</span>: <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#8cffa0</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">10px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#container</span> &gt; <span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#8ca0ff</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">5px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>HTML:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    Item as wide as the content, but at most 300 pixels.</span><br><span class="line">    與內容同寬，但最多到 300px</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    Item with flexible width but a minimum of 200 pixels.</span><br><span class="line">    寬度會彈性變動，最少寬 200px</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    Inflexible item of 150 pixels width.</span><br><span class="line">    就是 150px，不會變動</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -356,12 +386,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
