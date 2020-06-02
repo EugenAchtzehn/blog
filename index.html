@@ -192,6 +192,231 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://eugenachtzehn.github.io/blog/2020/06/02/Basics-of-Express/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Eugene Tseng">
+      <meta itemprop="description" content="For F2E Skills & Ideas I Learned">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eugene's Notes on F2E">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2020/06/02/Basics-of-Express/" class="post-title-link" itemprop="url">Basics of Express</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-06-02 18:12:20 / Modified: 18:28:44" itemprop="dateCreated datePublished" datetime="2020-06-02T18:12:20+08:00">2020-06-02</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Express"><a href="#Express" class="headerlink" title="Express"></a>Express</h3><p>Express 是一個輕量化且具彈性的 Node.js 網站 (web applications) 開發框架，對無論是網頁或行動應用程式，其都有充足的工具可以支援。</p>
+<p>使用 npm 安裝 Express 到專案中：</p>
+<p><code>$ npm install express --save</code></p>
+<p>接著，在專案中開啟一個 app.js ，並創建一個 Express 應用程式，此為使用 Express 的起手式。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> app = express();</span><br></pre></td></tr></table></figure>
+
+<p>※ 遷移到新版，Express 3 與 Express 4 之間的差異？</p>
+<ul>
+<li><a href="https://expressjs.com/zh-tw/guide/migrating-4.html" target="_blank" rel="noopener">Official Guide</a></li>
+</ul>
+<p>以下介紹 Express 常用的 API 功能，和如何使用的範例碼。</p>
+<h4 id="express"><a href="#express" class="headerlink" title="express()"></a>express()</h4><ul>
+<li><a href="https://expressjs.com/zh-tw/api.html#express.json" target="_blank" rel="noopener">express.json([options])</a><ul>
+<li>為內建的中介函式，負責解析客戶傳進來 JSON 格式的資料，此功能由 <a href="http://expressjs.com/en/resources/middleware/body-parser.html" target="_blank" rel="noopener">body-parser</a> 而來。經過解析後，req.body 就會被此函式解析後的結果 (key-value pairs的形式) 取代。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不設路徑參數，代表對全網域都作用</span></span><br><span class="line">app.use(express.json());</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a href="https://expressjs.com/zh-tw/api.html#express.router" target="_blank" rel="noopener">express.Router([options])</a><ul>
+<li>建立一個新的 router 物件。</li>
+<li>可搭配中介層和 HTTP 方法 (get, post. put, …) ，將客戶請求導向到路由中。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在主要的 app.js 中，把同一父路徑下的子路徑拆分到新檔案管理 (分層)</span></span><br><span class="line"><span class="comment">// app.js 與 routes 在同一資料夾下</span></span><br><span class="line"><span class="keyword">var</span> news = <span class="built_in">require</span>(<span class="string">"./routes/news"</span>);</span><br><span class="line"><span class="comment">// 遇到要進 "/news" 路徑下的請求，跑伺服器上 "./routes/news.js" 的內容</span></span><br><span class="line">app.use(<span class="string">"/news"</span>, news);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以下寫在 news.js 內</span></span><br><span class="line"><span class="comment">// 建立環境</span></span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">"express"</span>);</span><br><span class="line"><span class="keyword">var</span> router = express.Router();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 設定各項子路徑的回應</span></span><br><span class="line">router.get(<span class="string">"/breaking"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">"&lt;h2&gt;Latest news you should know.&lt;/h2&gt;"</span>);</span><br><span class="line">&#125;);</span><br><span class="line">router.get(<span class="string">"/international"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">"&lt;h2&gt;What's new around the world?&lt;/h2&gt;"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 最後，匯出這兩個回應設定</span></span><br><span class="line"><span class="built_in">module</span>.exports = router;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a href="https://expressjs.com/zh-tw/api.html#express.static" target="_blank" rel="noopener">express.static(“root”, [options])</a><ul>
+<li>為內建的中介函式，功能是提供靜態檔的檔案目錄。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 圖片、給 ejs 載入的 &lt;script scr="/js/all.js"&gt; 等靜態檔案</span></span><br><span class="line"><span class="comment">// public 下可再開設 img, js 等資料夾</span></span><br><span class="line">app.use(express.static(<span class="string">"public"</span>));</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a href="https://expressjs.com/zh-tw/api.html#express.urlencoded" target="_blank" rel="noopener">express.urlencoded([options])</a><ul>
+<li>為內建的中介函式，負責解析客戶傳進來 urlencoded 格式的資料，此功能由 <a href="http://expressjs.com/en/resources/middleware/body-parser.html" target="_blank" rel="noopener">body-parser</a> 而來。經過解析後，req.body 就會被此函式解析後的結果 (key-value pairs的形式) 取代。</li>
+<li>extended 屬性：<ul>
+<li>為布林值，當 false 時，值可為字串或陣列，當 true 時，值可為任何種類。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不設路徑參數，代表對全網域作用</span></span><br><span class="line">app.use(express.urlencoded(&#123;<span class="attr">extended</span>: <span class="literal">false</span>&#125;));</span><br></pre></td></tr></table></figure>
+
+<h4 id="Application"><a href="#Application" class="headerlink" title="Application"></a>Application</h4><ul>
+<li><a href="https://expressjs.com/zh-tw/api.html#app.engine" target="_blank" rel="noopener">app.engine(‘ext’, callback)</a><ul>
+<li>此函式會將使用 ‘ext’ (特定副檔名) 的檔案，以 callback 註冊的範本引擎來執行。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 註冊 ejs 引擎</span></span><br><span class="line"><span class="keyword">var</span> engine = <span class="built_in">require</span>(<span class="string">"ejs-locals"</span>);</span><br><span class="line">app.engine(<span class="string">"ejs"</span>, engine);</span><br><span class="line">app.set(<span class="string">"views"</span>, <span class="string">"./views"</span>);</span><br><span class="line">app.set(<span class="string">"view engine"</span>, <span class="string">"ejs"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 以 views 下的 product.ejs 檔案回應客戶端對 domain/product 的請求</span></span><br><span class="line">app.get(<span class="string">"/product"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">    res.render(<span class="string">"product"</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 帶入物件給 ejs 檔使用</span></span><br><span class="line">app.get(<span class="string">"/index"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">    res.render(<span class="string">"index"</span>, &#123;</span><br><span class="line">        name: <span class="string">"Tina"</span>,</span><br><span class="line">        age: <span class="number">31</span>,</span><br><span class="line">        gender: <span class="string">"female"</span>,</span><br><span class="line">        family: <span class="string">"&lt;em&gt;Chen&lt;/em&gt;"</span></span><br><span class="line">        isQualified: <span class="literal">true</span>,</span><br><span class="line">        interest:[<span class="string">"hands"</span>, <span class="string">"jogging"</span>, <span class="string">"shopping"</span>]</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- EJS 使用 express 傳入的物件 --&gt;</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">    &lt;li&gt;&lt;%&#x3D; name %&gt;&lt;&#x2F;li&gt;</span><br><span class="line">    &lt;li&gt;&lt;%&#x3D; age %&gt;&lt;&#x2F;li&gt;</span><br><span class="line">    &lt;li&gt;&lt;%- family %&gt;&lt;&#x2F;li&gt;</span><br><span class="line">    &lt;li&gt;&lt;% if (isQualified) &#123; %&gt;</span><br><span class="line">        &lt;em&gt;Displayed!&lt;&#x2F;em&gt;</span><br><span class="line">        &lt;% &#125; %&gt;&lt;&#x2F;li&gt;</span><br><span class="line">&lt;&#x2F;ul&gt;</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">    &lt;% for (const index in interests) &#123; %&gt;</span><br><span class="line">    &lt;li&gt;&lt;%- interests[index] %&gt;&lt;&#x2F;li&gt;</span><br><span class="line">    &lt;% &#125; %&gt;</span><br><span class="line">&lt;&#x2F;ul&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a href="https://expressjs.com/zh-tw/api.html#app.get.method" target="_blank" rel="noopener">app.get(‘path’, callback)</a><ul>
+<li>執行 callback 函式，以應對客戶端對某個特定路徑提出的 HTTP GET 請求。</li>
+<li>‘/‘ 根路徑，通常是網域首頁，為路徑預設值。</li>
+<li>callback 為中介函式。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">    res.send(<span class="string">'GET request to homepage success!'</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a href="https://expressjs.com/zh-tw/api.html#app.listen" target="_blank" rel="noopener">app.listen(port)</a><ul>
+<li>綁定並監聽指定連接埠的連線狀況，與 Node 的 http.server.listen() 方法類似。</li>
+<li>※ 在一些主機服務上，如：Heroku, Nodejitsu, AWS，供應商可能會另行設置其他連接埠給你的網站使用，如果寫死埠號可能會造成 500 錯誤，以下有參考的解決方法。<ul>
+<li><a href="https://stackoverflow.com/questions/18864677/what-is-process-env-port-in-node-js" target="_blank" rel="noopener">Stackoverflow Ref.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"><span class="comment">// app.listen(3000); 在自己可控制的主機上可以寫死</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 若無預設的 port 則使用 3000</span></span><br><span class="line"><span class="keyword">var</span> port = process.env.PORT || <span class="number">3000</span>;</span><br><span class="line">app.listen(port);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a href="https://expressjs.com/zh-tw/api.html#app.post.method" target="_blank" rel="noopener">app.post(‘path’, callback)</a><ul>
+<li>執行 callback 函式，以應對客戶端對某個特定路徑提出的 HTTP POST 請求。</li>
+<li>‘/‘ 根路徑，通常是網域首頁，為路徑預設值。</li>
+<li>callback 為中介函式。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.post(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  res.send(<span class="string">'POST request to homepage'</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a href="https://expressjs.com/zh-tw/api.html#app.set" target="_blank" rel="noopener">app.set(‘name’, ‘value’)</a><ul>
+<li>將 ‘name’ 設定成 ‘value’ ，但某些 ‘name’ 可以用來控制伺服器的行為。<ul>
+<li>控制用的名字，請參考：<a href="https://expressjs.com/zh-tw/api.html#app.settings.table" target="_blank" rel="noopener">Application Settings</a><ul>
+<li>“views”：範本檔所在的目錄</li>
+<li>“view engine”：設定要用的範本引擎</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一般應用</span></span><br><span class="line">app.set(<span class="string">'title'</span>, <span class="string">'My Site'</span>);</span><br><span class="line">app.get(<span class="string">'title'</span>) <span class="comment">// 'My Site'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 設定 ejs 模板引擎，兩個皆為 Express 保留的控制用字</span></span><br><span class="line">app.set(<span class="string">"views"</span>, <span class="string">"./views"</span>);</span><br><span class="line">app.set(<span class="string">"view engine"</span>, <span class="string">"ejs"</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a href="https://expressjs.com/zh-tw/api.html#app.use" target="_blank" rel="noopener">app.use(‘path’, callback)</a><ul>
+<li>對特定路徑(‘path’)置放和執行指定的中介函式，類似守門員的功用。</li>
+<li>‘/‘，預設值為根路徑。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不設定路徑，即對每個進入該網域的客戶請求都執行下列 callback</span></span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Time: %d"</span>, <span class="built_in">Date</span>.now());</span><br><span class="line">    <span class="comment">// 進入後續程式碼</span></span><br><span class="line">    next();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h4><ul>
+<li><a href="https://expressjs.com/zh-tw/api.html#req.body" target="_blank" rel="noopener">req.body</a><ul>
+<li>包含了請求所提交的 key-value 資料對，預設上是 undefined，但再使用中介層 (如：express.json(), express.urlencoded) 解析後會變成物件資料。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 解析 application/json 資料 </span></span><br><span class="line">app.use(express.json())</span><br><span class="line"><span class="comment">// 解析 application/x-www-form-urlencoded 資料</span></span><br><span class="line">app.use(express.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">true</span> &#125;))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 接收對 "/profile" 提出的 POST 請求，查看客戶端送出的資料，並以 JSON 格式回應</span></span><br><span class="line">app.post(<span class="string">"/profile"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(req.body)</span><br><span class="line">  res.json(req.body)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h4><ul>
+<li><a href="https://expressjs.com/zh-tw/api.html#res.redirect" target="_blank" rel="noopener">res.redirect(status, ‘path’)</a><ul>
+<li>將客戶端網址重新導向指定的路徑，可同時指定前面的參數做為 HTTP 的狀態碼。未表明時，預設為 “302 Found” (Moved temporarily，資源存在但位置被臨時移動)。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 可支援轉向到其他網域</span></span><br><span class="line">res.redirect(<span class="string">"https://google.com"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 支援從根路徑出發的相對路徑寫法</span></span><br><span class="line">res.redirect(<span class="string">"/admin"</span>) <span class="comment">// 導向到 http://example.com/admin</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 支援從現有網址出發的相對路徑寫法</span></span><br><span class="line"><span class="comment">// 現在網址：http://example.com/blog/admin/ (注意此處結尾有斜線)</span></span><br><span class="line">res.redirect(<span class="string">"post/new"</span>) <span class="comment">// 導向到 http://example.com/blog/admin/post/new</span></span><br><span class="line"><span class="comment">// 若結尾無斜線：http://example.com/blog/admin</span></span><br><span class="line"><span class="comment">// 則會導到 http://example.com/blog/post/new</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 回到上一層</span></span><br><span class="line"><span class="comment">// 現在網址：http://example.com/admin/post/new</span></span><br><span class="line">res.redirect(<span class="string">".."</span>) <span class="comment">// http://example.com/admin/post</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 回到上一頁 (back to the referer)</span></span><br><span class="line">res.redirect(<span class="string">'back'</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a href="https://expressjs.com/zh-tw/api.html#res.render" target="_blank" rel="noopener">res.render(‘view’ [, locals] [, callback])</a><ul>
+<li>渲染 view 檔案 (如放在 views 資料夾下的 product.ejs 就是填入 “product”)，並發送渲染過的 HTML 字串給客戶端。 view 參數是位於 views 資料夾下的，要被渲染檔案的路徑 (可為絕對路徑或是相對於 views 的路徑)。</li>
+<li>locals 為物件，可將本地端的變數帶給 view 檔案使用。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 傳送已渲染的 view 給客戶端</span></span><br><span class="line">res.render(<span class="string">'index'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 傳送本地變數給 view 的檔案使用</span></span><br><span class="line">res.render(<span class="string">'user'</span>, &#123; <span class="attr">name</span>: <span class="string">'Tobi'</span> &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err, html</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a href="https://expressjs.com/zh-tw/api.html#res.send[" target="_blank" rel="noopener">res.send([body])</a><ul>
+<li>發送 HTTP 回應，body 參數可為 buffer 物件、字串、物件、陣列。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">res.send(Buffer.from(<span class="string">'whoop'</span>));</span><br><span class="line"><span class="comment">// 當參數為物件或是陣列時，回應會使用 JSON 呈現</span></span><br><span class="line">res.send(&#123; <span class="attr">some</span>: <span class="string">'json'</span> &#125;);</span><br><span class="line"><span class="comment">// 當參數為字串時，"Content-Type" 會被設成 "text/html"</span></span><br><span class="line">res.send(<span class="string">'&lt;p&gt;some html&lt;/p&gt;'</span>);</span><br><span class="line"><span class="comment">// 與狀態碼進行鏈式寫法</span></span><br><span class="line">res.status(<span class="number">404</span>).send(<span class="string">'Sorry, we cannot find that!'</span>);</span><br><span class="line">res.status(<span class="number">500</span>).send(&#123; <span class="attr">error</span>: <span class="string">'something blew up'</span> &#125;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a href="https://expressjs.com/zh-tw/api.html#res.status" target="_blank" rel="noopener">res.status(code)</a><ul>
+<li>設定針對 HTTP 狀態碼的回應，通常採用鏈式寫法，後面函式為針對此狀態的回應。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 針對全網域的 404 錯誤的回應</span></span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">    res.status(<span class="number">404</span>).send(<span class="string">"&lt;h2&gt;抱歉，找不到您要的頁面&lt;/h2&gt;"</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 針對全網域的 500 (伺服器程式錯誤，Internal Server Error) 的回應</span></span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">    res.status(<span class="number">500</span>).send(<span class="string">"&lt;h2&gt;伺服器程式出現問題，請稍後再試&lt;/h2&gt;"</span>)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 官方範例</span></span><br><span class="line">res.status(<span class="number">403</span>).end()</span><br><span class="line">res.status(<span class="number">400</span>).send(<span class="string">'Bad Request'</span>)</span><br><span class="line">res.status(<span class="number">404</span>).sendFile(<span class="string">'/absolute/path/to/404.png'</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Middleware"><a href="#Middleware" class="headerlink" title="Middleware"></a><a href="http://expressjs.com/zh-tw/guide/writing-middleware.html" target="_blank" rel="noopener">Middleware</a></h4><ul>
+<li>中介層函式是一些有權存取請求物件 (req)、回應物件 (res)、下一個中介層 (next) 的函式。中介層函式能執行以下任務：<ul>
+<li>執行任何程式碼。</li>
+<li>變更請求和回應物件。</li>
+<li>結束請求 / 回應循環。</li>
+<li>呼叫堆疊中的下一個中介層。</li>
+</ul>
+</li>
+<li>如果當前的中介層不會結束請求 / 回應循環，則必須呼叫 next() ，才能將控制權傳遞到下一個中介層，否則請求會停擺。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 宣告一個中介層函式 myLogger</span></span><br><span class="line"><span class="comment">// 在通過此中介層後，console 會印出 "Logged!"</span></span><br><span class="line"><span class="keyword">var</span> myLogger = <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Logged!"</span>);</span><br><span class="line">    next();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在 req 物件下新增一個 reqTime 屬性，記錄 timestamp</span></span><br><span class="line"><span class="keyword">var</span> reqTime = <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>)</span>&#123;</span><br><span class="line">    req.reqTime = <span class="built_in">Date</span>.now();</span><br><span class="line">    next();</span><br><span class="line">&#125;;</span><br><span class="line">app.use(reqTime);</span><br><span class="line">app.get(<span class="string">'/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> resText = <span class="string">"Hello, guest!"</span>;</span><br><span class="line">    resText += <span class="string">"Requested at: "</span> + req.reqTime + <span class="string">""</span>;</span><br><span class="line">    res.send(resText);</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://eugenachtzehn.github.io/blog/2020/05/02/JS-Dungeon-for-Rookies-Fourth-Boss-World-Clock/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -891,12 +1116,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
