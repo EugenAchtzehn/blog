@@ -192,6 +192,114 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://eugenachtzehn.github.io/blog/2020/06/04/Basics-of-Node-js-Part-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Eugene Tseng">
+      <meta itemprop="description" content="For F2E Skills & Ideas I Learned">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eugene's Notes on F2E">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2020/06/04/Basics-of-Node-js-Part-1/" class="post-title-link" itemprop="url">Basics of Node.js - Part 1</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-06-04 02:17:40 / Modified: 02:22:00" itemprop="dateCreated datePublished" datetime="2020-06-04T02:17:40+08:00">2020-06-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="V8-引擎"><a href="#V8-引擎" class="headerlink" title="V8 引擎"></a>V8 引擎</h4><p>V8 是由一個由 Google 開發的開源 JavaScript 引擎，用於 Chromium, Chrome 中，使用 C++ 撰寫，基於 JS 的執行環境 (Web 應用框架 / web application framework) Node.js 也是採用 V8 做為其核心。</p>
+<ul>
+<li><a href="https://github.com/nodejs/node/tree/master/deps/v8" target="_blank" rel="noopener">Ref on GitHub</a></li>
+<li><a href="http://www.cc.ntu.edu.tw/chinese/epaper/0034/20150920_3409.html" target="_blank" rel="noopener">Introduction to Node.js and npm by 台大計中</a></li>
+</ul>
+<h4 id="命令列與操作-CMD"><a href="#命令列與操作-CMD" class="headerlink" title="命令列與操作 CMD"></a>命令列與操作 CMD</h4><p>Windows 命令提示字元 (cmd.exe) ，是 Windows 系統的命令列執行程式 (CLI, command-line interpreter) ，常用指令整理如下：</p>
+<ul>
+<li><p><a href="https://pjchender.github.io/2017/09/26/%E6%8C%87%E4%BB%A4-command-line-%E6%93%8D%E4%BD%9C-cmd-cli-bash/" target="_blank" rel="noopener">Ref. by PJChen - Command Line 操作：CMD, CLI, Bash</a></p>
+</li>
+<li><p><code>dir</code> 或 <code>ls</code> ，列出路徑下的所有檔案和目錄，在 CMD 中僅接受 dir 指令，ls 為 unix 和類 unix 系統使用</p>
+<ul>
+<li>directory, list </li>
+</ul>
+</li>
+<li><p><code>cd &quot;path to directory&quot;</code> 移動到指定的目錄上 (資料夾) ，移動到同路徑下的目錄可以只輸入目錄名稱</p>
+<ul>
+<li><code>cd ..</code> 回到上一層的目錄</li>
+<li>change directory</li>
+</ul>
+</li>
+<li><p><code>mkdir &quot;name of directory&quot;</code> 或是 <code>md &quot;name of directory&quot;</code> 創建目錄 (資料夾)</p>
+<ul>
+<li>make directory</li>
+</ul>
+</li>
+<li><p><code>touch &quot;file name&quot;</code> 建立檔案</p>
+</li>
+<li><p><code>rmdir &quot;name of directory&quot;</code> 或是 <code>rd &quot;name of directory&quot;</code> 移除目錄 (資料夾)</p>
+</li>
+</ul>
+<h4 id="安裝與執行-Node-js"><a href="#安裝與執行-Node-js" class="headerlink" title="安裝與執行 Node.js"></a>安裝與執行 Node.js</h4><p>進入 Node.js 官網，推薦選擇穩定版本安裝，因為套件相容度會較高，且論壇上比較容易查到相關資源。完畢後確認使否安裝完成，使用在 CMD 指令查詢 Node.js 版號：</p>
+<p><code>node --version</code> 或是 <code>node -v</code></p>
+<ul>
+<li>有回應，如出現： v8.11.4 ，代表成功</li>
+</ul>
+<p>直接在命令列環境使用 Node.js (即開啟編譯核心)：</p>
+<p>輸入：<code>node</code></p>
+<ul>
+<li>前方輸入出現箭頭 <code>&gt;</code> ，代表成功可開始寫入 JS</li>
+</ul>
+<p>輸入：<code>&gt; var a = 1;</code></p>
+<ul>
+<li>回應：<code>undefined</code></li>
+</ul>
+<p>輸入：<code>&gt; a</code></p>
+<ul>
+<li>回應：<code>1</code></li>
+</ul>
+<p>跳出 JS 執行狀態，回到 Node.js ，按 <code>ctrl + c</code> 兩次</p>
+<p>※ 一般狀況下執行 Node.js ，通常是讓命令提示介面移動到指定的路徑下，再使用 <code>node app.js</code> 指令來執行 JS 檔案。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://eugenachtzehn.github.io/blog/2020/06/02/Basics-of-Express/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1116,12 +1224,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
