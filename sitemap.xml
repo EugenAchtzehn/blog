@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://eugenachtzehn.github.io/blog/2020/06/05/Basics-of-Node-js-Part-2/</loc>
+    
+    <lastmod>2020-06-05T12:34:36.220Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://eugenachtzehn.github.io/blog/2020/06/04/Basics-of-Node-js-Part-1/</loc>
     
     <lastmod>2020-06-03T18:22:00.352Z</lastmod>
