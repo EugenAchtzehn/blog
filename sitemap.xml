@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://eugenachtzehn.github.io/blog/2020/05/02/JS-Dungeon-for-Rookies-Fourth-Boss-World-Clock/</loc>
+    
+    <lastmod>2020-06-08T10:53:44.824Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://eugenachtzehn.github.io/blog/2020/06/06/Basics-of-Node-js-Part-3/</loc>
     
     <lastmod>2020-06-05T17:01:14.341Z</lastmod>
@@ -26,13 +33,6 @@
     <loc>https://eugenachtzehn.github.io/blog/2020/06/02/Basics-of-Express/</loc>
     
     <lastmod>2020-06-02T10:28:44.981Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://eugenachtzehn.github.io/blog/2020/05/02/JS-Dungeon-for-Rookies-Fourth-Boss-World-Clock/</loc>
-    
-    <lastmod>2020-05-04T17:25:37.245Z</lastmod>
     
   </url>
   

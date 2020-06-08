@@ -780,7 +780,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-05 01:25:37" itemprop="dateModified" datetime="2020-05-05T01:25:37+08:00">2020-05-05</time>
+                <time title="Modified: 2020-06-08 18:53:44" itemprop="dateModified" datetime="2020-06-08T18:53:44+08:00">2020-06-08</time>
               </span>
 
           
@@ -796,7 +796,10 @@
       
           <h3 id="新手JavaScript地下城第四關-時區"><a href="#新手JavaScript地下城第四關-時區" class="headerlink" title="新手JavaScript地下城第四關 - 時區"></a>新手JavaScript地下城第四關 - 時區</h3><p>這是系列文的第二篇，但因為我 <del>柿子挑軟的吃</del> 最近想精進一些有關用 JS 操作時間的技巧，所以決定先選擇這個題目來處理。</p>
 <ul>
-<li>首先，來個<a href="https://xd.adobe.com/spec/6f0eb277-9976-489c-5668-95757eccfa55-193f/" target="_blank" rel="noopener">老師的設計稿</a></li>
+<li>首先，從老師提供的設計稿來大致看一下複雜的程度。</li>
+</ul>
+<p><img src="JS_dungeon_4.0.PNG" alt="[design concept]"></p>
+<ul>
 <li>從圖中可以得知，版面排列和樣式簡潔明瞭，應該在 CSS 和 HTML 結構設計上不會有太多挑戰，可以很快進入 JS 取得時間、調整時區和更新時間的部分。</li>
 </ul>
 <hr>
@@ -804,7 +807,7 @@
 <li>這邊先要說明一下，其實這個時鐘的關卡我前後做了兩個不同但類似的成品，第一個是由六角提供的設計稿，那時的想法很單純，所有的 HTML 標籤就直接先通通刻好，再分別使用 JS 來選取、操控元素，後來才發現如果要擴充其他城市會有點麻煩。第二份是採用 Bootstrap 4 來調整版面和樣式的版本，HTML 元素則使用 JS 內的<strong>資料陣列，以迴圈和 <code>innerHTML()</code> 來塞入，整體擴充性較佳</strong>。</li>
 <li>六角的那份，採用的方法是給每個城市外層定義一個區塊 <code>&lt;div class=&quot;timebox&quot;&gt;</code>，且 CSS 定義 <code>.timebox{display: flex}</code>，讓左右側的子元素 (區塊元素) 可以併排呈現。同時，預先填入不會變動的各地地名 (慕尼黑是朋友要求加上的)，會即時變動的左右側時間元素，都一一設定好 id 供 JS 選擇。<ul>
 <li>其他 CSS 較特殊的部分，我從設計稿中推測依照時間不同，各地區的文字和背景色有黑底白字 (夜間)、白底黑字 (日間) 兩種樣式，所以另外定義了 <code>.timebox.night{background-color: #000000; color: #ffffff}</code> 讓 JS 可以順利切換到黑夜。</li>
-<li>下圖為結果的黑白效果，定義白天時間為 06:00 到 17:59</li>
+<li>下圖為結果的黑白效果，定義白天時間為 06:00 到 17:59。</li>
 </ul>
 </li>
 </ul>
@@ -813,7 +816,7 @@
 <li>第二份是幫朋友寫的 Bootstrap 版本，因 BS 本身就已經定義了很多兼具彈性和美觀的樣式類別，所以在 CSS 的設計上就相當簡單，在實作時有兩個經過思考的點：</li>
 </ul>
 <ol>
-<li>因為是使用陣列資料和迴圈塞入，如果要使用 BS 定義好的樣式，在每個城市的物件資料中也要加入相關的訊息，比如說想依次對 cityA, cityB, cityC 加入 bg-primary, bg-secondary, bg-info 的樣式，則必須讓 JS 的陣列記錄資料用類似下面的方法，並在迴圈組字串時搭配 <code>&lt;div class=&quot;${city.background}&quot;&gt;</code>才能讓套用 BS 的樣式：</li>
+<li>因為是使用陣列資料和迴圈塞入，如果要使用 BS 定義好的樣式，在每個城市的物件資料中也要加入相關的訊息，比如說想依次對 cityA, cityB, cityC 加入 bg-primary, bg-secondary, bg-info 的樣式，則必須讓 JS 的陣列記錄資料用類似下面的方法，並在迴圈組字串時搭配 <code>&lt;div class=&quot;${city.background}&quot;&gt;</code> 才能讓套用 BS 的樣式：</li>
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> dataArray = [</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">"cityA"</span>, <span class="attr">background</span>: <span class="string">"bg-primary"</span>&#125;, </span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">"cityB"</span>, <span class="attr">background</span>: <span class="string">"bg-seconday"</span>&#125;, </span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">"cityC"</span>, <span class="attr">background</span>: <span class="string">"bg-info"</span>&#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 <ol start="2">
@@ -823,7 +826,7 @@
 
 <p><img src="JS_dungeon_4.2.PNG" alt="[the layout using BS grid system]"></p>
 <h5 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h5><ul>
-<li>不論是六角版或是 BS 版，最重要的都是使用 JS 內建物件 Date，使用 <code>const date = new Date()</code> 語法，即可取得瀏覽器的本地時間，一般常見使用下列語法：<ul>
+<li>不論是六角版或是 BS 版，最重要的都是使用 JS 內建物件 Date，使用<code>const date = new Date()</code>語法，即可取得瀏覽器的本地時間，一般常見使用下列語法：<ul>
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" rel="noopener">Ref. by MDN</a></li>
 </ul>
 </li>
@@ -839,8 +842,8 @@
 
 <ul>
 <li>雜記：<ul>
-<li>對取得的各地時間字串，可以用 string.split() 方法處理成陣列，再使用陣列方法如：array.splice() 來取得想要的值。</li>
-<li>判斷黑夜白天可以用一個小函式配判斷式，再加上 setAttribute() 方法處理。</li>
+<li>對取得的各地時間字串，可以用<code>string.split()</code>方法處理成陣列，再使用陣列方法如：<code>array.splice()</code> 來取得想要的值。</li>
+<li>判斷黑夜白天可以用一個小函式配判斷式，再加上<code>setAttribute()</code>方法處理。</li>
 </ul>
 </li>
 </ul>
