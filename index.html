@@ -192,6 +192,154 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://eugenachtzehn.github.io/blog/2020/07/22/JS-Dungeon-for-Rookies-Third-Boss-Calculator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.jpg">
+      <meta itemprop="name" content="Eugene Tseng">
+      <meta itemprop="description" content="For F2E Skills & Ideas I Learned">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Eugene's Notes on F2E">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/blog/2020/07/22/JS-Dungeon-for-Rookies-Third-Boss-Calculator/" class="post-title-link" itemprop="url">JS Dungeon for Rookies Third Boss: Calculator</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-07-22 23:08:08" itemprop="dateCreated datePublished" datetime="2020-07-22T23:08:08+08:00">2020-07-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-08-02 23:52:54" itemprop="dateModified" datetime="2020-08-02T23:52:54+08:00">2020-08-02</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="新手JavaScript地下城第三關-計算機"><a href="#新手JavaScript地下城第三關-計算機" class="headerlink" title="新手JavaScript地下城第三關 - 計算機"></a>新手JavaScript地下城第三關 - 計算機</h3><p>系列文的第三篇，這次回過頭來完成前一關的線上計算機。</p>
+<p><img src="JS_dungeon_3.0.PNG" alt="[design concept]"></p>
+<ul>
+<li>首先，快速瀏覽一下設計稿，可以發現大致上分為三個區塊：<ul>
+<li>上方的算式和當下結果顯示</li>
+<li>中間的數字按鍵和四則運算符號</li>
+<li>下方的功能按鍵，含清除(AC)、倒退(backspace)、等於符號</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="重要的處理步驟和技巧"><a href="#重要的處理步驟和技巧" class="headerlink" title="重要的處理步驟和技巧"></a>重要的處理步驟和技巧</h4><h5 id="HTML-CSS"><a href="#HTML-CSS" class="headerlink" title="HTML, CSS"></a>HTML, CSS</h5><ul>
+<li>HTML 結構設計和 CSS 排版上，並沒有太困難的地方，上方的算式和結果顯示採用兩個區塊元素，並讓文字內容靠右對齊 <code>text-align: right</code> ，接著調整文字和背景顏色、字體大小、邊框圓弧後即可完成此區設計。</li>
+<li>中下方的數字區、功能區，從圖面上可以看出是將寬度四等分切成小元素區塊的作法，所以我一齊採用 flex 排版來完成。實作上，在外層元素下 <code>{display: flex; justify-content: space-around; flex-wrap: wrap}</code> 這幾個設定，並對內層的按鍵元素用 % 設定寬度，將游標設定成一般顯示 <code>cursor: pointer</code> ，再稍微調整一下內外距、圓弧化即可完成，最後記得加上一些滑鼠移入元素的效果 (hover)。</li>
+</ul>
+<h5 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h5><ul>
+<li>這是我第一次試圖使用 Vue.js 這類資料驅動 (data-driven) 的框架來完成的地下城挑戰，中間不斷的試誤過程，讓自己對 JS 以及 Vue.js 有了更深入的理解。</li>
+<li>在計算機挑戰使用 Vue.js 的好處：<ul>
+<li>因計算機的操作包含了較複雜的流程，有很多的數據需要記憶、運算、判斷、顯示，使用 Vue.js 和其專屬的開發工具 (Vue.js devtools) ，可以讓開發者很快速地掌握情況，加快開發速度。</li>
+</ul>
+</li>
+<li>首先，對每個 HTML 的按鍵元素上加上對應的觸發事件，並在 Vue.js 實體內開出對應的方法，如下：</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">header</span>&gt;</span><span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box-wrap d-flex space-around flex-wrap"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 數字按鍵 1 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span> @<span class="attr">click</span>=<span class="string">"enterOne"</span>&gt;</span>1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 運算按鍵 加號 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box math-symbol"</span> @<span class="attr">click</span>=<span class="string">"clickPlus"</span>&gt;</span><span class="symbol">&amp;#43;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el:<span class="string">"#app"</span>,</span><br><span class="line">    data:&#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">        enterOne: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="comment">//... 對應使用者按下 "1" 數字鍵的函數</span></span><br><span class="line">        &#125;,</span><br><span class="line">        clickPlus: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="comment">//... 對應使用者按下 "+" 運算鍵的函數</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>接著，開始構思如何顯示輸入的數值到結果區。在實作中，我前後採用了兩種方法，一個是使用數值型別的做法，另一個則是使用字串型別的做法，後來發現在小數點相關的計算時，使用數值型別輸入會相當棘手，所以後來改為採用字串型別的方法，範例如下：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el:<span class="string">"#app"</span>,</span><br><span class="line">    data:&#123;</span><br><span class="line">        currentValue: <span class="number">0</span></span><br><span class="line">        <span class="comment">// 先設定一個初始值來接數字鍵輸入的數值，"現有值"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">        enterOneNum: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.currentValue = <span class="keyword">this</span>.currentValue * <span class="number">10</span> + <span class="number">1</span>;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment">// 數值型別做法：因計算機是十進位，先按 1 再按 2，預期是 12</span></span><br><span class="line">        <span class="comment">// 也就是"現有值"乘以 10，再加上該按鍵的數字</span></span><br><span class="line">        enterOneString: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.currentValue += <span class="string">"1"</span>;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment">// 字串型別做法：字串的加法，就是在現有值後方直接加上按鍵的字串</span></span><br><span class="line">        <span class="comment">// 不論現有值是 "1" 或 1，在加了 "2" 之後，都會變成 "12"</span></span><br><span class="line">        </span><br><span class="line">        clickPoint: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.currentValue += <span class="string">"."</span>;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment">// 使用字串型別讓小數點的輸入變得相當直覺</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>但在採用了字串來儲存現有值後，會發現當使用者不照一般情境操作，會出現不合理的現有值，如： “001”, “0.00.1” 但是計算機仍能繼續操作的現象。因此，我在 data 中加入了一組布林值來記錄小數點狀況，並調整了數字輸入鍵的邏輯如下：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el:<span class="string">"#app"</span>,</span><br><span class="line">    data:&#123;</span><br><span class="line">        currentValue: <span class="number">0</span>,</span><br><span class="line">        isDecimal: <span class="literal">false</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">        enterZero: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.currentValue += <span class="string">"0"</span>;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.isDecimal === <span class="literal">false</span>)&#123;</span><br><span class="line">                <span class="keyword">this</span>.currentValue = <span class="built_in">Number</span>(<span class="keyword">this</span>.currentValue);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 對進入小數狀態的現有值，不轉回數字，才能順利輸入 1.01, 1.001</span></span><br><span class="line">            <span class="comment">// 但非小數狀態的現有值，則與其他數字輸入鍵相同，轉回數值型別</span></span><br><span class="line">        &#125;,</span><br><span class="line">        enterOne: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.currentValue += <span class="string">"1"</span>;</span><br><span class="line">            <span class="keyword">this</span>.currentValue = <span class="built_in">Number</span>(<span class="keyword">this</span>.currentValue);</span><br><span class="line">            <span class="comment">// 非 0, 00 輸入鍵，現有值一律轉回數值型別儲存</span></span><br><span class="line">        &#125;,</span><br><span class="line">        </span><br><span class="line">        clickPoint: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.isDecimal = <span class="literal">true</span>;</span><br><span class="line">            <span class="comment">// 按下小數點，使得 isDecimal 轉為 true</span></span><br><span class="line">            <span class="keyword">this</span>.currentValue += <span class="string">"."</span>;</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>完成以上步驟後，接著處理四則運算和等號的部分，我採用的方法是將四則運算代號化，在 data 中開出一項來儲存，並在算式顯示區和等號的函數中，使用多層判斷式的方法來處理。另外，在四則運算時，需要將現有值丟入另一個儲存空間，以便騰出空間來輸入新的現有值，範例如下：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el:<span class="string">"#app"</span>,</span><br><span class="line">    data:&#123;</span><br><span class="line">        currentValue: <span class="number">0</span>,</span><br><span class="line">        isDecimal: <span class="literal">false</span>,</span><br><span class="line">        mathOperator: <span class="string">""</span></span><br><span class="line">        <span class="comment">// 初始化先帶入空值</span></span><br><span class="line">        previousValue: <span class="string">""</span></span><br><span class="line">        <span class="comment">// 待運算的值</span></span><br><span class="line">        resultValue: <span class="string">""</span></span><br><span class="line">        <span class="comment">// 結果值</span></span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">        clickPlus: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.previousValue = <span class="keyword">this</span>.currentValue;</span><br><span class="line">            <span class="keyword">this</span>.currentValue = <span class="number">0</span>;</span><br><span class="line">            <span class="comment">// 歸零現有值</span></span><br><span class="line">            <span class="keyword">this</span>.mathOperator = <span class="string">"plus"</span>;</span><br><span class="line">            <span class="keyword">this</span>.isDecimal = <span class="literal">false</span>;</span><br><span class="line">            <span class="comment">// 讓新輸入的值有能也有小數點</span></span><br><span class="line">        &#125;,</span><br><span class="line">        clickEqual: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.mathOperator === <span class="string">"plus"</span>)&#123;</span><br><span class="line">                <span class="keyword">this</span>.resultValue = <span class="keyword">this</span>.previousValue + <span class="keyword">this</span>.currentValue;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.mathOperator === <span class="string">"minus"</span>)&#123;</span><br><span class="line">                <span class="keyword">this</span>.resultValue = <span class="keyword">this</span>.previousValue - <span class="keyword">this</span>.currentValue;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.mathOperator === <span class="string">"multiply"</span>)&#123;</span><br><span class="line">                <span class="keyword">this</span>.resultValue = <span class="keyword">this</span>.previousValue * <span class="keyword">this</span>.currentValue;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.mathOperator === <span class="string">"divide"</span>)&#123;</span><br><span class="line">                <span class="keyword">this</span>.resultValue = <span class="keyword">this</span>.previousValue / <span class="keyword">this</span>.currenValue;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 搭配 mathOperator 的判斷式，讓使用者按下等於時可以計算結果</span></span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>至於在算式的記憶顯示上，因程式語言使用的加減乘除符號與日常使用的寫法不同，我在 HTML 和 <a href="http://www.fileformat.info/info/unicode/char/2b/index.htm" target="_blank" rel="noopener">JS</a> 都用了另外的方法處理：</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box math-symbol"</span> @<span class="attr">click</span>=<span class="string">"clickDivide"</span>&gt;</span><span class="symbol">&amp;#247;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="comment">&lt;!-- 除號 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box math-symbol"</span> @<span class="attr">click</span>=<span class="string">"clickMultiply"</span>&gt;</span><span class="symbol">&amp;#215;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="comment">&lt;!-- 乘號 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box math-symbol"</span> @<span class="attr">click</span>=<span class="string">"clickPlus"</span>&gt;</span><span class="symbol">&amp;#43;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="comment">&lt;!-- 加號 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box math-symbol"</span> @<span class="attr">click</span>=<span class="string">"clickMinus"</span>&gt;</span><span class="symbol">&amp;#8722;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="comment">&lt;!-- 減號 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box clean"</span> @<span class="attr">click</span>=<span class="string">"clickBack"</span>&gt;</span><span class="symbol">&amp;#9003;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="comment">&lt;!-- 倒退 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"equal"</span>&gt;</span><span class="symbol">&amp;#61;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span> <span class="comment">&lt;!-- 等號 --&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el:<span class="string">"#app"</span>,</span><br><span class="line">    computed:&#123;</span><br><span class="line">        showOperator: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.mathOperator === <span class="string">"plus"</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"\u002B"</span>;</span><br><span class="line">                <span class="comment">// 當按下加運算符號時，回傳加號</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.mathOperator === <span class="string">"minus"</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"\u2212"</span>;</span><br><span class="line">                <span class="comment">// 回傳減號</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.mathOperator === <span class="string">"multiply"</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"\u00D7"</span>;</span><br><span class="line">                <span class="comment">// 回傳乘號</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.mathOperator === <span class="string">"divide"</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"\u00F7"</span>;</span><br><span class="line">                <span class="comment">// 回傳除號</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">                <span class="comment">// 初始狀態，回傳空字串</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在最上排的算式顯示部分，經過多次嘗試後，最後採用的方法是區分<strong>「結果態」</strong>和<strong>「運算態」</strong>的做法，並使用 computed 在 HTML 中進行顯示，詳細的程式碼如下方範例：</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"formula"</span>&gt;</span></span><br><span class="line">        &#123;&#123;equationDisplay&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"result"</span>&gt;</span></span><br><span class="line">        &#123;&#123;mainDisplay&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el:<span class="string">"#app"</span>,</span><br><span class="line">    data:&#123;</span><br><span class="line">        notResult: <span class="literal">true</span>,</span><br><span class="line">        previousValue: <span class="string">""</span>,</span><br><span class="line">        currentValue: <span class="number">0</span>,</span><br><span class="line">        mathOperator: <span class="string">""</span>,</span><br><span class="line">        equationText: <span class="string">""</span>,</span><br><span class="line">        resultValue: <span class="string">""</span></span><br><span class="line">    &#125;,</span><br><span class="line">    computed:&#123;</span><br><span class="line">        equationDisplay: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.notResult === <span class="literal">true</span>)&#123;</span><br><span class="line">                <span class="comment">// "運算態" (還在輸入兩個數字跟運算符號) 時，動態顯示在 .formula</span></span><br><span class="line">                <span class="keyword">return</span> (<span class="keyword">this</span>.previousValue + <span class="string">" "</span> + <span class="keyword">this</span>.showOperator + <span class="string">" "</span> + <span class="keyword">this</span>.currentValue);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 等號事件(clickEqual)最後會組成的字串，於"結果態"時顯示</span></span><br><span class="line">                <span class="comment">// 因最後會清空 previousValue, mathOperator，並讓 currentValue = resultValue</span></span><br><span class="line">                <span class="comment">// 所以先組成字串丟進去顯示</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>.equationText;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        mainDisplay: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="comment">// 主顯示區，"運算態"時顯示 currentValue，"結果態"時顯示 resultValue</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.notResult === <span class="literal">true</span>)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>.currentValue;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">this</span>.resultValue;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        showOperator: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="comment">//...</span></span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>其他按鍵的部分，也就是倒退 (Backspace) 和清空 (AC) 的功能，則相對容易處理很多。倒退鍵使用的是將當前值轉換成字串，再轉成陣列，並用陣列方法去除最末端元素的做法；清空功能則是將所有資料回歸初始設定狀態，範例如下：</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el: <span class="string">"#app"</span>,</span><br><span class="line">    data:&#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">        clickBack: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="comment">// 將 currentValue 字串化</span></span><br><span class="line">            <span class="keyword">let</span> currentString = <span class="built_in">String</span>(<span class="keyword">this</span>.currentValue);</span><br><span class="line">            <span class="comment">// 依照字元組成陣列元素</span></span><br><span class="line">            <span class="keyword">let</span> currentStringArray = currentString.split(<span class="string">""</span>);</span><br><span class="line">            <span class="comment">// 清除最後一個陣列元素</span></span><br><span class="line">            currentStringArray.pop();</span><br><span class="line">            <span class="comment">// 組回字串再轉回數字</span></span><br><span class="line">            <span class="keyword">this</span>.currentValue = <span class="built_in">Number</span>(currentStringArray.join(<span class="string">""</span>));</span><br><span class="line">        &#125;,</span><br><span class="line">        clickClean: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="comment">// 讓 data 的內容回歸初始設定</span></span><br><span class="line">            <span class="keyword">this</span>.currentValue = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">this</span>.isDecimal = <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">this</span>.previousValue = <span class="string">""</span>;</span><br><span class="line">            <span class="keyword">this</span>.mathOperator = <span class="string">""</span>;</span><br><span class="line">            <span class="keyword">this</span>.resultValue = <span class="string">""</span>;</span><br><span class="line">            <span class="keyword">this</span>.notResult = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">this</span>.equationText = <span class="string">""</span>;            </span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>最後是處理多位數字時的破版問題，也是本關卡明定要解決的議題，我參考的是<a href="https://codepen.io/MASKLIN/pen/BMWLxp" target="_blank" rel="noopener">最快破關者</a>的做法，也就是在要破版時操控顯示區的 CSS 設定，讓字體從 <code>font-size: 3.5rem</code> 轉變成 <code>font-size: 1.5rem</code>，如此一來便可以讓顯示的數字縮小，在 currentValue 達到 Infinity 前都可以順利顯示。因此，我調整了位在 computed 下，主顯示區的函數 mainDisaply，讓其去抓 currentValue 的長度，並判斷要不要調整 CSS 的字體設定，範例如下：</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"result"</span> <span class="attr">ref</span>=<span class="string">"result"</span>&gt;</span></span><br><span class="line">    &#123;&#123;mainDisplay&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el: <span class="string">"#app"</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">    &#125;,</span><br><span class="line">    computed:&#123;</span><br><span class="line">        <span class="comment">// 使用 Vue 的 $refs 功能來抓取 DOM 元素</span></span><br><span class="line">        mainDisplay: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="comment">//...</span></span><br><span class="line">            <span class="keyword">let</span> stringArray = <span class="built_in">String</span>(<span class="keyword">this</span>.currentValue).split(<span class="string">""</span>);</span><br><span class="line">            <span class="comment">// 超過 10 的數字就會破版</span></span><br><span class="line">            <span class="keyword">if</span> (stringArray.length &gt; <span class="number">10</span>)&#123;</span><br><span class="line">                <span class="keyword">this</span>.$refs.result.style.fontSize = <span class="string">"1.5rem"</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 初始化的時候就去抓 this.$refs.result 會是 undefined，加上判斷式來避免這種情形</span></span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.$refs.result)&#123;</span><br><span class="line">                    <span class="keyword">this</span>.$refs.result.style.fontSize = <span class="string">"3.5rem"</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//...</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment">// 使用原生的 JS 語法選取的做法如下</span></span><br><span class="line">        mainDisplay: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="comment">//...</span></span><br><span class="line">            <span class="keyword">const</span> result = <span class="built_in">document</span>.querySelector(<span class="string">".result"</span>);</span><br><span class="line">            <span class="keyword">let</span> stringArray = <span class="built_in">String</span>(<span class="keyword">this</span>.currentValue).split(<span class="string">""</span>);</span><br><span class="line">            <span class="keyword">if</span> (stringArray.length &gt; <span class="number">10</span>)&#123;</span><br><span class="line">                result.setAttribute(<span class="string">"style"</span>, <span class="string">"font-size: 1.5rem"</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                result.setAttribute(<span class="string">"style"</span>, <span class="string">"font-size: 3.5rem"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>※ 注意，如果採用原生 JS 語法，DOM 元素選取的過程要在 Vue 的作用下，不可先選了才創造 Vue 的實體，這樣會無法成功操作。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 會失敗的寫法 (元素選取在 Vue 實體外)</span></span><br><span class="line"><span class="keyword">const</span> result = <span class="built_in">document</span>.querySelector(<span class="string">".result"</span>);</span><br><span class="line"><span class="keyword">var</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el: <span class="string">"#app"</span>,</span><br><span class="line">    computed:&#123;</span><br><span class="line">        mainDisplay: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            result.setAttribute(<span class="string">"style"</span>,<span class="string">"font-size: 1.5rem"</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="未解的問題"><a href="#未解的問題" class="headerlink" title="未解的問題"></a>未解的問題</h4><ul>
+<li>JavaScript number 的實作是二進位的浮點數標準，所以在計算 0.1 + 0.2 時，結果會變成 0.30000000000000004，一般比較常用的調整方法是先將小數轉成整數，算完後再除回小數<code>this.resultValue = (this.previousValue * 10 + this.currentValue * 10) / 10</code>，但因為這個關卡是計算機，無法事先得知使用者要輸入幾位小數，目前仍然沒有想到比較好的方法來處理這個議題。</li>
+</ul>
+<h4 id="參考資料與專案連結"><a href="#參考資料與專案連結" class="headerlink" title="參考資料與專案連結"></a>參考資料與專案連結</h4><ul>
+<li><a href="https://www.jianshu.com/p/728f03674444" target="_blank" rel="noopener">如何在 Vue.js 中操控 DOM？</a></li>
+<li>程式碼和 demo 站：<ul>
+<li><a href="https://github.com/EugenAchtzehn/calculator" target="_blank" rel="noopener">Repo on github</a></li>
+<li><a href="https://eugenachtzehn.github.io/calculator/index.html">範例站台</a></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="https://eugenachtzehn.github.io/blog/2020/06/06/Basics-of-Node-js-Part-3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -780,7 +928,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-08 18:57:07" itemprop="dateModified" datetime="2020-06-08T18:57:07+08:00">2020-06-08</time>
+                <time title="Modified: 2020-07-23 01:57:52" itemprop="dateModified" datetime="2020-07-23T01:57:52+08:00">2020-07-23</time>
               </span>
 
           
@@ -803,7 +951,7 @@
 <li>從圖中可以得知，版面排列和樣式簡潔明瞭，應該在 CSS 和 HTML 結構設計上不會有太多挑戰，可以很快進入 JS 取得時間、調整時區和更新時間的部分。</li>
 </ul>
 <hr>
-<h4 id="重要處理步驟和技巧"><a href="#重要處理步驟和技巧" class="headerlink" title="重要處理步驟和技巧"></a>重要處理步驟和技巧</h4><h5 id="CSS-HTML"><a href="#CSS-HTML" class="headerlink" title="CSS, HTML"></a>CSS, HTML</h5><ul>
+<h4 id="重要處理步驟和技巧"><a href="#重要處理步驟和技巧" class="headerlink" title="重要處理步驟和技巧"></a>重要處理步驟和技巧</h4><h5 id="HTML-CSS"><a href="#HTML-CSS" class="headerlink" title="HTML, CSS"></a>HTML, CSS</h5><ul>
 <li>這邊先要說明一下，其實這個時鐘的關卡我前後做了兩個不同但類似的成品，第一個是由六角提供的設計稿，那時的想法很單純，所有的 HTML 標籤就直接先通通刻好，再分別使用 JS 來選取、操控元素，後來才發現如果要擴充其他城市會有點麻煩。第二份是採用 Bootstrap 4 來調整版面和樣式的版本，HTML 元素則使用 JS 內的<strong>資料陣列，以迴圈和 <code>innerHTML()</code> 來塞入，整體擴充性較佳</strong>。</li>
 <li>六角的那份，採用的方法是給每個城市外層定義一個區塊 <code>&lt;div class=&quot;timebox&quot;&gt;</code>，且 CSS 定義 <code>.timebox{display: flex}</code>，讓左右側的子元素 (區塊元素) 可以併排呈現。同時，預先填入不會變動的各地地名 (慕尼黑是朋友要求加上的)，會即時變動的左右側時間元素，都一一設定好 id 供 JS 選擇。<ul>
 <li>其他 CSS 較特殊的部分，我從設計稿中推測依照時間不同，各地區的文字和背景色有黑底白字 (夜間)、白底黑字 (日間) 兩種樣式，所以另外定義了 <code>.timebox.night{background-color: #000000; color: #ffffff}</code> 讓 JS 可以順利切換到黑夜。</li>
@@ -1312,79 +1460,12 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://eugenachtzehn.github.io/blog/2020/02/28/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.jpg">
-      <meta itemprop="name" content="Eugene Tseng">
-      <meta itemprop="description" content="For F2E Skills & Ideas I Learned">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Eugene's Notes on F2E">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/blog/2020/02/28/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-02-28 15:48:44" itemprop="dateCreated datePublished" datetime="2020-02-28T15:48:44+08:00">2020-02-28</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="extend next" rel="next" href="/blog/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
 
 
 
@@ -1451,12 +1532,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>

@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://eugenachtzehn.github.io/blog/2020/05/02/JS-Dungeon-for-Rookies-Fourth-Boss-World-Clock/JS_dungeon_4.1.PNG">
 <meta property="og:image" content="https://eugenachtzehn.github.io/blog/2020/05/02/JS-Dungeon-for-Rookies-Fourth-Boss-World-Clock/JS_dungeon_4.2.PNG">
 <meta property="article:published_time" content="2020-05-02T10:05:04.000Z">
-<meta property="article:modified_time" content="2020-06-08T10:57:07.286Z">
+<meta property="article:modified_time" content="2020-07-22T17:57:52.646Z">
 <meta property="article:author" content="Eugene Tseng">
 <meta property="article:tag" content="JS地下城">
 <meta property="article:tag" content="Rookie JS developer&#39;s Dungeon">
@@ -227,7 +227,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-06-08 18:57:07" itemprop="dateModified" datetime="2020-06-08T18:57:07+08:00">2020-06-08</time>
+                <time title="Modified: 2020-07-23 01:57:52" itemprop="dateModified" datetime="2020-07-23T01:57:52+08:00">2020-07-23</time>
               </span>
 
           
@@ -250,7 +250,7 @@
 <li>從圖中可以得知，版面排列和樣式簡潔明瞭，應該在 CSS 和 HTML 結構設計上不會有太多挑戰，可以很快進入 JS 取得時間、調整時區和更新時間的部分。</li>
 </ul>
 <hr>
-<h4 id="重要處理步驟和技巧"><a href="#重要處理步驟和技巧" class="headerlink" title="重要處理步驟和技巧"></a>重要處理步驟和技巧</h4><h5 id="CSS-HTML"><a href="#CSS-HTML" class="headerlink" title="CSS, HTML"></a>CSS, HTML</h5><ul>
+<h4 id="重要處理步驟和技巧"><a href="#重要處理步驟和技巧" class="headerlink" title="重要處理步驟和技巧"></a>重要處理步驟和技巧</h4><h5 id="HTML-CSS"><a href="#HTML-CSS" class="headerlink" title="HTML, CSS"></a>HTML, CSS</h5><ul>
 <li>這邊先要說明一下，其實這個時鐘的關卡我前後做了兩個不同但類似的成品，第一個是由六角提供的設計稿，那時的想法很單純，所有的 HTML 標籤就直接先通通刻好，再分別使用 JS 來選取、操控元素，後來才發現如果要擴充其他城市會有點麻煩。第二份是採用 Bootstrap 4 來調整版面和樣式的版本，HTML 元素則使用 JS 內的<strong>資料陣列，以迴圈和 <code>innerHTML()</code> 來塞入，整體擴充性較佳</strong>。</li>
 <li>六角的那份，採用的方法是給每個城市外層定義一個區塊 <code>&lt;div class=&quot;timebox&quot;&gt;</code>，且 CSS 定義 <code>.timebox{display: flex}</code>，讓左右側的子元素 (區塊元素) 可以併排呈現。同時，預先填入不會變動的各地地名 (慕尼黑是朋友要求加上的)，會即時變動的左右側時間元素，都一一設定好 id 供 JS 選擇。<ul>
 <li>其他 CSS 較特殊的部分，我從設計稿中推測依照時間不同，各地區的文字和背景色有黑底白字 (夜間)、白底黑字 (日間) 兩種樣式，所以另外定義了 <code>.timebox.night{background-color: #000000; color: #ffffff}</code> 讓 JS 可以順利切換到黑夜。</li>
@@ -404,7 +404,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#新手JavaScript地下城第四關-時區"><span class="nav-number">1.</span> <span class="nav-text">新手JavaScript地下城第四關 - 時區</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重要處理步驟和技巧"><span class="nav-number">1.1.</span> <span class="nav-text">重要處理步驟和技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CSS-HTML"><span class="nav-number">1.1.1.</span> <span class="nav-text">CSS, HTML</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#JavaScript"><span class="nav-number">1.1.2.</span> <span class="nav-text">JavaScript</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#新手JavaScript地下城第四關-時區"><span class="nav-number">1.</span> <span class="nav-text">新手JavaScript地下城第四關 - 時區</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重要處理步驟和技巧"><span class="nav-number">1.1.</span> <span class="nav-text">重要處理步驟和技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#HTML-CSS"><span class="nav-number">1.1.1.</span> <span class="nav-text">HTML, CSS</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#JavaScript"><span class="nav-number">1.1.2.</span> <span class="nav-text">JavaScript</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -420,12 +420,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
